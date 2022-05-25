@@ -9,6 +9,9 @@ const reducer = (state = {}, action) => {
                 hobby: R.pathOr('Error fetching hobby data', ['payload', 'data', 'hobbies'], action),
             }
         }
+        case Types.CLEAR_HOBBY:{
+            return {};
+        }
         default: {
             return state;
         }

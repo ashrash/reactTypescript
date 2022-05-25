@@ -8,4 +8,5 @@ export interface columnSchema {
     cellIcon?: any;
     headerAction?: string;
     cellAction?: string;
+    clickable?: boolean;
 }

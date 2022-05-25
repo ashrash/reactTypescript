@@ -48,16 +48,27 @@ class App extends React.Component<Props, State> {
 
     processClick = (action: string, textInputState: any) => {
         const { processAction } = this.props;
-        processAction(action, textInputState);
+        const { selectedRowId } = this.state;
+        const payload = {
+          selectedRowId,
+          textInputState,
+        }
+        processAction(action, payload);
     }
 
     processRowClick = (id: any) => {
       const { fetchHobbyByUserId } = this.props;
+      this.setState((state)=> {
+        return {
+          ...state,
+          selectedRowId: id,
+        }
+      })
       fetchHobbyByUserId(id);
     }
 
     render() {
-      const { rightTableStatus } = this.state;
+      const { rightTableStatus, selectedRowId } = this.state;
       const { userData, hobbyData } = this.props;
       return (
         <div className="">
@@ -69,6 +80,7 @@ class App extends React.Component<Props, State> {
               processRowClick={this.processRowClick}
             />
             <Table 
+              selectedRowId={selectedRowId}
               headers={hobbyTable} 
               tableData={hobbyData}
               dataStatus={rightTableStatus} 
