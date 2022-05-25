@@ -1,13 +1,16 @@
 // shared config (dev and prod)
 const { resolve } = require("path");
+const path = require('path');
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+
+const srcPath = path.join(__dirname, '../src');
 
 module.exports = {
   entry: "./index.tsx",
   resolve: {
     extensions: [".js", ".jsx", ".ts", ".tsx"],
   },
-  context: resolve(__dirname, "../src"),
+  context: srcPath,
   module: {
     rules: [
       {
@@ -32,5 +35,5 @@ module.exports = {
       },
     ],
   },
-  plugins: [new HtmlWebpackPlugin({ template: "template/index.html" })],
+  plugins: [new HtmlWebpackPlugin({ template: "assets/index.html" })],
 };

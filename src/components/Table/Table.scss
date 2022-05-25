@@ -1,0 +1,23 @@
+#header {
+    background-color: gray;
+    color: white;
+    text-align: center;
+}
+
+table {
+    border-collapse: collapse;
+    border-bottom: 1px solid black;
+}
+
+td {
+    padding: 5px;
+    margin: 0px;
+    border: 1px solid gray;
+}
+tr:last-child td {
+    border-bottom: none;
+}
+
+.clickable{
+    cursor: pointer;
+}

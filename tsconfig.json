@@ -1,12 +1,12 @@
 {
   "compilerOptions": {
-    "jsx": "react-jsx",
-    "lib": ["dom", "dom.iterable", "esnext"],
-    "module": "ESNext",
+    "lib": ["es6", "es7", "dom"],
     "moduleResolution": "node",
     "outDir": "dist",
-    "target": "ESNext",
     "sourceMap": true,
+    "target": "es5",
+    "jsx": "react",
+    "module": "es6",
     "types": ["webpack-env", "node"]
 
   },
