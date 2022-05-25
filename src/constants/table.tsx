@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { columnSchema, Hobby } from "../models";
 import { MdDelete } from 'react-icons/Md';
 import Types from '../state/ducks/user/types';
@@ -43,7 +42,7 @@ export const hobbyTable: columnSchema[] = [
 export const userTable: columnSchema[] = [
     {
         displayName: 'id',
-        selector: 'id',
+        selector: '_id',
         identity: true,
         display: false,
     },
@@ -60,15 +59,6 @@ export const userTable: columnSchema[] = [
         cellAction: '',
         cellIcon: MdDelete,
     }
-];
-
-export const userData: any = [
-    { name: 'Ashwin', id: 1 },
-    { name: 'Ashwin', id: 2 },
-    { name: 'Ashwin', id: 3 },
-    { name: 'Ashwin', id: 4 },
-    { name: 'Ashwin', id: 5 },
-    { name: 'Ashwin', id: 6 },
 ];
 
 

@@ -1,11 +1,12 @@
 import Types from "./types"
+import * as R from 'ramda';
 
 const reducer = (state = {}, action) => {
     switch (action.type) {
         case Types.SET_HOBBY_DATA: {
             return {
                 ...state,
-                hobbies: action.payload,
+                hobby: R.pathOr('Error fetching hobby data', ['payload', 'data', 'hobbies'], action),
             }
         }
         default: {

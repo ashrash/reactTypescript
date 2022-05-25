@@ -1,10 +1,10 @@
 import Types from './types';
 
-const addUserAction = (payload) => ({
-  type: Types.ADD_HOBBY,
+const fetchHobbyByUserId = (payload) => ({
+  type: Types.GET_HOBBY,
   payload,
 });
 
 export default{
-  addUserAction,
+  fetchHobbyByUserId,
 };

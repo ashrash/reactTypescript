@@ -1,7 +1,7 @@
 import * as R from 'ramda';
 
-const getUser  = state => R.pathOr('', ['user'], state);
+const getUsers  = state => R.pathOr([], ['user', 'users' ], state);
 
 export default {
-    getUser,
+    getUsers,
 }

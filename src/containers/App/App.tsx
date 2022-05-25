@@ -1,13 +1,23 @@
 import * as React from "react";
-import { connect } from 'react-redux';
+import { connect, ConnectedProps } from 'react-redux';
 import Table from "../../components/Table";
-import { userTable, userData, hobbyData, hobbyTable } from "../../constants";
-import actions from "../../state/ducks/user/actions";
+import { userTable, hobbyTable } from "../../constants";
+import { selectors as userSelectors, actions as userActions } from "../../state/ducks/user";
+import { selectors as hobbySelectors, actions as hobbyActions } from "../../state/ducks/hobby";
+
 import './App.scss';
 
-type Props = {
+interface DispatchProps  {
   processAction: Function;
   fetchAllUsers: Function;
+  fetchHobbyByUserId: Function;
+}
+
+interface StateProps  {
+  userData: any;
+  hobbyData: any;
+}
+interface OwnProps  {
 }
 
 type State = {
@@ -16,7 +26,15 @@ type State = {
    rightTableStatus: string | null;
 };
 
+
+type Props = StateProps & DispatchProps & OwnProps
+
 class App extends React.Component<Props, State> {
+    public static defaultProps = {
+      userData: [],
+      hobbyData: []
+    };
+
     state: State = {
       selectedRowId: null,
       leftTableStatus: null,
@@ -34,18 +52,13 @@ class App extends React.Component<Props, State> {
     }
 
     processRowClick = (id: any) => {
-      console.log(id);
-      this.setState((state)=> {
-        return {
-          ...state,
-          selectedRowId: id,
-          rightTableStatus: 'loading'
-        }
-      })
+      const { fetchHobbyByUserId } = this.props;
+      fetchHobbyByUserId(id);
     }
 
     render() {
       const { rightTableStatus } = this.state;
+      const { userData, hobbyData } = this.props;
       return (
         <div className="">
           <div className="user-hobby">
@@ -67,13 +80,17 @@ class App extends React.Component<Props, State> {
     }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
+  userData: userSelectors.getUsers(state),
+  hobbyData: hobbySelectors.getHobbies(state),
 });
 
 const mapDispatchToProps = dispatch => ({
-  processAction: (type: string, payload: any) => dispatch(actions.processAction(type, payload)),
-  fetchAllUsers: () => dispatch(actions.fetchAllUsersAction()),
+  processAction: (type: string, payload: any) => dispatch(userActions.default.processAction(type, payload)),
+  fetchAllUsers: () => dispatch(userActions.default.fetchAllUsersAction()),
+  fetchHobbyByUserId: (payload: any) => dispatch(hobbyActions.default.fetchHobbyByUserId(payload)),
 });
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect<StateProps, DispatchProps, OwnProps>(mapStateToProps, mapDispatchToProps)(App);
+

@@ -1,30 +1,21 @@
-import { createStore, applyMiddleware } from 'redux';
+import { createStore, applyMiddleware, Store } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import logger from 'redux-logger';
 import createSagaMiddleware from 'redux-saga';
+import { initialState } from '../models';
 
 import { reducers, sagas } from './ducks';
 
-export default function configureStore(initialState) {
+export default function configureStore(initialState?: initialState): Store<initialState> {
   const sagaMiddleware = createSagaMiddleware();
 
-  const middlewares = [sagaMiddleware];
-
-  if (process.env.NODE_ENV !== 'production') {
-    middlewares.push(logger);
-  }
-
   const composeEnhancers = composeWithDevTools({});
+
   const store = createStore(
     reducers as any,
-    initialState as any,
-    composeEnhancers(
-      applyMiddleware(
-        ...middlewares,
-      ),
-    ),
-  );
-
+    initialState,
+    composeEnhancers(applyMiddleware(logger, sagaMiddleware))
+  )
   let sagaTask = sagaMiddleware.run(sagas);
 
   if (module.hot) {

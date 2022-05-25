@@ -2,6 +2,7 @@ import * as React from "react";
 import * as R from 'ramda';
 import { columnSchema } from '../../models/table';
 import './Table.scss';
+import { IconType } from "react-icons";
 
 type Props = {
     headers: columnSchema[];
@@ -39,7 +40,7 @@ class Table extends React.Component<Props, State> {
         const { textInputState } = this.state;
         if(R.propOr(true, 'display', col)){
             switch(R.propOr('text', 'type', col)){
-                case 'input': return <td><input value={R.prop(R.propOr('', 'selector', col), textInputState)} onChange={this.handleTextChange(col)} type="text" /></td>;
+                case 'input': return <td><input value={R.prop(R.propOr('', 'selector', col), textInputState) as unknown as string} onChange={this.handleTextChange(col)} type="text" /></td>;
                 case 'button': return <td><button onClick={this.handleButtonClick(col.headerAction)}>{R.propOr('', 'displayName', col)}</button></td>;
                 case 'text': 
                 default:
@@ -55,9 +56,9 @@ class Table extends React.Component<Props, State> {
 
     handleRowClick = (row) => {
         const { processRowClick, headers } = this.props;
-        return (event) => {
-            const idRow = R.find(R.propEq('identity', true))(headers);
-            processRowClick(R.prop(idRow?.selector, row));
+        return () => {
+            const idRow: any = R.find(R.propEq('identity', true))(headers as any);
+            processRowClick(R.prop(idRow?.selector as any, row));
         };
     }
 
@@ -65,7 +66,7 @@ class Table extends React.Component<Props, State> {
         if(R.propOr(true, 'display', col)){
             switch(R.propOr('text', 'type', col)){
                 case 'button': {
-                    const Icon = R.propOr(<></>, 'cellIcon', col);
+                    const Icon: IconType = R.propOr(<></>, 'cellIcon', col);
                     return <td><Icon onClick={this.handleIconClick}/></td>;
                 }; 
                 case 'text':
@@ -74,8 +75,8 @@ class Table extends React.Component<Props, State> {
                     <td 
                         className="clickable"
                         onClick={this.handleRowClick(row)} 
-                        key={R.propOr('', R.propOr('', 'selector', col), row)}>
-                    {R.propOr('', R.propOr('', 'selector', col), row)}
+                        key={R.propOr('', R.propOr('', 'selector', col), row)  as unknown as string}>
+                    {R.propOr('', R.propOr('', 'selector', col), row) as unknown as string}
                     </td>);
                 }
             }

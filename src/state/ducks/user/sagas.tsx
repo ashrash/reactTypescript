@@ -7,7 +7,6 @@ import Selectors from './selectors';
 import Types from './types';
 
 function* addUser() {
-    const user = yield select(Selectors.getUser);
     console.log('reached sagas! hurrraaaay!');
 }
 
