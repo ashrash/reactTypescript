@@ -1,6 +1,8 @@
 # Front End Challenge
 
-A React + Typescript + Redux Sagas + SCSS + Webpack
+**React + Typescript + Redux Sagas + Jest + SCSS + Webpack**
+
+A Web application for users and hobbies. 
 
 ## Folder structure 
 
@@ -9,7 +11,6 @@ A React + Typescript + Redux Sagas + SCSS + Webpack
    ├─ src
    │  ├─ assets
    │  ├─ components
-   │  │  ├─ Header
    │  ├─ constants
    │  ├─ containers
    │  ├─ models
