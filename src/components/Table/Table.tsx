@@ -11,6 +11,7 @@ type Props = {
     processRowClick?: Function;
     dataStatus?: string;
     selectedRowId?: string;
+    className: string;
 };
 
 type State = {
@@ -125,10 +126,10 @@ class Table extends React.Component<Props, State> {
     }
 
     render() {
-    const { headers, tableData } = this.props;
+    const { headers, tableData, className } = this.props;
       return (
-        <div className="tableContainer">
-            <table>
+        <div className={className}>
+            <table className="table-div">
                 <thead>
                     <tr>
                         {headers.map(col=> this.renderHeader(col))}

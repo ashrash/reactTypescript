@@ -4,7 +4,7 @@ import './Header.scss';
 
 const Header = () => (
     <div id="tableContainer">
-    <table>
+    <table className="userHobbies">
         <thead>
             <tr>
                 User Hobbies

@@ -71,21 +71,23 @@ class App extends React.Component<Props, State> {
       const { rightTableStatus, selectedRowId } = this.state;
       const { userData, hobbyData } = this.props;
       return (
-        <div className="">
+        <div className="main">
           <Header />
-          <div className="user-hobby">
+          <div className="flex-container">
             <Table 
               selectedRowId={selectedRowId}
               headers={userTable} 
               tableData={userData} 
               processAction={this.processClick}
               processRowClick={this.processRowClick}
+              className="userTable"
             />
             <Table 
               headers={hobbyTable} 
               tableData={hobbyData}
               dataStatus={rightTableStatus} 
               processAction={this.processClick}
+              className="hobbyTable"
             />
           </div>
         </div>

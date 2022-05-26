@@ -7,7 +7,8 @@
     "target": "es5",
     "jsx": "react",
     "module": "es6",
-    "types": ["webpack-env", "node"]
+    "esModuleInterop":true,
+    "types": ["jest", "webpack-env", "node"]
 
   },
   "include": ["src"]

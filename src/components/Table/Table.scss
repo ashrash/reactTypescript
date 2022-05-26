@@ -4,16 +4,20 @@
     text-align: center;
 }
 
-.tableContainer {
+
+.userTable {
+    flex-grow: 1;
     overflow-y: auto;
-    height: 15rem;
 }
 
-.tableContainer thead th {
-    position: sticky;
-    top: 0;
-  }
+.hobbyTable {
+    flex-grow: 2;
+    overflow-y: auto;
+}
 
+.table-div {
+    height: 20rem;
+}
 table {
     border-collapse: collapse;
     border-bottom: 1px solid black;
