@@ -34,7 +34,7 @@ class Table extends React.Component<Props, State> {
         };
     }
 
-    handleButtonClick = (action) => {
+    handleButtonClick = (action: string) => {
         const { textInputState } = this.state;
         const  { processAction } = this.props;
         return () => {
@@ -71,7 +71,7 @@ class Table extends React.Component<Props, State> {
         return null;
     }
 
-    handleIconClick = (action, idRow, row) => {
+    handleIconClick = (action: string, idRow, row) => {
         const { processAction, headers } = this.props;
         return () => {
             processAction(action, R.prop(idRow?.selector as any, row));

@@ -1,4 +1,5 @@
 import * as React from "react";
+import * as R from "ramda";
 import { connect } from 'react-redux';
 import Header from "../../components/Header";
 import Table from "../../components/Table";
@@ -16,6 +17,7 @@ interface DispatchProps  {
 interface StateProps  {
   userData: any;
   hobbyData: any;
+  errorBanner: string;
 }
 interface OwnProps  {
 }
@@ -32,7 +34,8 @@ type Props = StateProps & DispatchProps & OwnProps
 class App extends React.Component<Props, State> {
     public static defaultProps = {
       userData: [],
-      hobbyData: []
+      hobbyData: [],
+      errorBanner: '',
     };
 
     state: State = {
@@ -69,7 +72,7 @@ class App extends React.Component<Props, State> {
 
     render() {
       const { rightTableStatus, selectedRowId } = this.state;
-      const { userData, hobbyData } = this.props;
+      const { userData, hobbyData, errorBanner } = this.props;
       return (
         <div className="main">
           <Header />
@@ -90,6 +93,7 @@ class App extends React.Component<Props, State> {
               className="hobbyTable"
             />
           </div>
+          <p className="error">{errorBanner}</p>
         </div>
       );
     }
@@ -98,6 +102,7 @@ class App extends React.Component<Props, State> {
 const mapStateToProps = (state) => ({
   userData: userSelectors.getUsers(state),
   hobbyData: hobbySelectors.getHobbies(state),
+  errorBanner: userSelectors.getError(state),
 });
 
 const mapDispatchToProps = dispatch => ({

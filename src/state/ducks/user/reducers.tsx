@@ -9,6 +9,18 @@ const reducer = (state = {}, action) => {
                 users: R.pathOr('Error fetching user data', ['payload', 'data'], action),
             }
         }
+        case Types.CLEAR_ERROR: {
+            return {
+                ...state,
+                error: null,
+            }
+        }
+        case Types.SET_ERROR: {
+            return {
+                ...state,
+                error: action?.payload,
+            }
+        }
         default: {
             return state;
         }

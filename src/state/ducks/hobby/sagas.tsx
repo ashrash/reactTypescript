@@ -3,6 +3,9 @@ import * as R from 'ramda';
 import {
     select, takeEvery, all, call, put,
 } from 'redux-saga/effects';
+import { hobby } from '../../../constants/dtos/hobby';
+import validateClass from '../../../utils/validation.middleware';
+import types from '../user/types';
 import Types from './types';
 
 function* getHobbyByUserId(payload) {
@@ -22,13 +25,21 @@ function* getHobbyByUserId(payload) {
 
 function* addHobby(payload) {
     try {
+        yield put({ type: types.CLEAR_ERROR });
         const { payload: hobbyData } = payload;
         const { textInputState, selectedRowId } = hobbyData;
-        if(selectedRowId) {
-            const response = yield call(axios.post, `/api/hobbies/${selectedRowId}`, textInputState);
-            const final = yield call(getHobbyByUserId, {payload: selectedRowId});
-        }
+        const validation = yield call(validateClass, hobby, textInputState);
+        if(!validation) {
+            if(selectedRowId) {
+                const response = yield call(axios.post, `/api/hobbies/${selectedRowId}`, textInputState);
+                const final = yield call(getHobbyByUserId, {payload: selectedRowId});
+            } else {
+            yield put({ type: types.SET_ERROR, payload: 'User not selected'});
 
+            }
+        } else {
+            yield put({ type: types.SET_ERROR, payload: validation});
+        }
     } catch(e) {
         console.log('error');
     }
