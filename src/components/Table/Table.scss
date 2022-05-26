@@ -4,20 +4,41 @@
     text-align: center;
 }
 
+.tableContainer {
+    overflow-y: auto;
+    height: 15rem;
+}
+
+.tableContainer thead th {
+    position: sticky;
+    top: 0;
+  }
+
 table {
     border-collapse: collapse;
     border-bottom: 1px solid black;
+    width: 100%;
 }
 
 td {
-    padding: 5px;
-    margin: 0px;
+    padding: 0.25rem;
+    margin: 1px;
     border: 1px solid gray;
 }
-tr:last-child td {
-    border-bottom: none;
+
+.clickable {
+    cursor: pointer;
 }
 
-.clickable{
-    cursor: pointer;
+.selected {
+    background-color: #8080804f;
+}
+
+.not-selected {
+    background-color: white;
+}
+
+.no-data {
+    height: 10rem;
+    background-color: #8080804f;
 }

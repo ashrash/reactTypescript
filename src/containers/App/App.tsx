@@ -1,10 +1,10 @@
 import * as React from "react";
-import { connect, ConnectedProps } from 'react-redux';
+import { connect } from 'react-redux';
+import Header from "../../components/Header";
 import Table from "../../components/Table";
 import { userTable, hobbyTable } from "../../constants";
 import { selectors as userSelectors, actions as userActions } from "../../state/ducks/user";
 import { selectors as hobbySelectors, actions as hobbyActions } from "../../state/ducks/hobby";
-
 import './App.scss';
 
 interface DispatchProps  {
@@ -72,15 +72,16 @@ class App extends React.Component<Props, State> {
       const { userData, hobbyData } = this.props;
       return (
         <div className="">
+          <Header />
           <div className="user-hobby">
             <Table 
+              selectedRowId={selectedRowId}
               headers={userTable} 
               tableData={userData} 
               processAction={this.processClick}
               processRowClick={this.processRowClick}
             />
             <Table 
-              selectedRowId={selectedRowId}
               headers={hobbyTable} 
               tableData={hobbyData}
               dataStatus={rightTableStatus} 

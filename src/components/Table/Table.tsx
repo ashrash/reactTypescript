@@ -70,36 +70,39 @@ class Table extends React.Component<Props, State> {
         return null;
     }
 
-    handleIconClick = (action, row) => {
+    handleIconClick = (action, idRow, row) => {
         const { processAction, headers } = this.props;
         return () => {
-            const idRow: any = R.find(R.propEq('identity', true))(headers as any);
             processAction(action, R.prop(idRow?.selector as any, row));
         };
     }
     
 
-    handleRowClick = (row) => {
+    handleRowClick = (idRow, row) => {
         const { processRowClick, headers } = this.props;
         return () => {
-            const idRow: any = R.find(R.propEq('identity', true))(headers as any);
             processRowClick(R.prop(idRow?.selector as any, row));
         };
     }
 
     renderCell = (col: columnSchema, row: any) => {
+        const { selectedRowId, headers } = this.props;
+        const idRow: any = R.find(R.propEq('identity', true))(headers as any);
+        const selected = selectedRowId && R.equals(R.prop(idRow?.selector, row), selectedRowId) ? "selected": "not-selected";
+        const clickable = col?.clickable ? "clickable": "non-clickable";
+        const className = `${selected} ${clickable}`
         if(R.propOr(true, 'display', col)){
             switch(R.propOr('text', 'type', col)){
                 case 'button': {
                     const Icon: IconType = R.propOr(<></>, 'cellIcon', col);
-                    return <td><Icon className="clickable" onClick={this.handleIconClick(col.cellAction, row)}/></td>;
+                    return <td className={selected}><Icon className="clickable" onClick={this.handleIconClick(col.cellAction, idRow, row)}/></td>;
                 }; 
                 case 'text':
                 default: {
                   return (
                     <td 
-                        className={col?.clickable ? "clickable": "non-clickable"}
-                        onClick={col?.clickable && this.handleRowClick(row)} 
+                        className={className}
+                        onClick={col?.clickable && this.handleRowClick(idRow, row)} 
                         key={R.propOr('', R.propOr('', 'selector', col), row)  as unknown as string}>
                     {R.propOr('', R.propOr('', 'selector', col), row) as unknown as string}
                     </td>);
@@ -109,13 +112,22 @@ class Table extends React.Component<Props, State> {
         return null;
     }
 
-    render() {
-    const { headers, tableData, dataStatus } = this.props;
-    if(R.equals(dataStatus, 'loading')){
-        return <p>loading</p>;
+    renderEmptyTable = () => {
+        const { tableData, headers } = this.props;
+        if(R.isEmpty(tableData)) {
+            return (<tr className="no-data">
+                <td colSpan={headers.length||0}>
+                No Data Found
+                </td>
+            </tr>);
+        } 
+        return null;
     }
+
+    render() {
+    const { headers, tableData } = this.props;
       return (
-        <div id="tableContainer">
+        <div className="tableContainer">
             <table>
                 <thead>
                     <tr>
@@ -130,6 +142,7 @@ class Table extends React.Component<Props, State> {
                         </tr>
                         );
                     })}
+                    {this.renderEmptyTable()}
                 </tbody>
             </table>
         </div>
